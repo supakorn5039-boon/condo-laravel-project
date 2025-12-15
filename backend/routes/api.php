@@ -23,8 +23,11 @@ Route::prefix('rooms')->group(function () {
 });
 
 Route::middleware('auth:api')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', [AuthController::class, 'user']);
+    // Auth routes that require authentication
+    Route::prefix('auth')->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/user', [AuthController::class, 'user']);
+    });
 
     // Authenticated room access and admin management
     Route::prefix('room')->group(function () {

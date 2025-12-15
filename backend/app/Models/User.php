@@ -12,6 +12,8 @@ use Illuminate\Support\Carbon;
 use Laravel\Passport\HasApiTokens;
 
 /**
+ * @implements \Illuminate\Contracts\Auth\Authenticatable
+ *
  * @property int $id
  * @property string $email
  * @property string $password
