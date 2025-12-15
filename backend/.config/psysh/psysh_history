@@ -1,0 +1,5 @@
+  docker compose exec app php artisan tinker
+  --execute="App\Models\Room::first()->getMedia('images')->toArray()"
+DB::table('media')->get()
+/q
+/q
