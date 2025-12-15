@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Feature\Api;
 
 use App\Models\Room;
@@ -153,14 +154,14 @@ class RoomControllerTest extends TestCase
     public function test_authenticated_user_can_get_single_room(): void
     {
         $room = Room::factory()->create([
-            'name'        => 'Test Room',
-            'address'     => '123 Test Street',
+            'name' => 'Test Room',
+            'address' => '123 Test Street',
             'description' => 'A beautiful room',
-            'bedrooms'    => 2,
-            'bathrooms'   => 1,
-            'price'       => 5000,
-            'area'        => 100,
-            'type'        => 'rent',
+            'bedrooms' => 2,
+            'bathrooms' => 1,
+            'price' => 5000,
+            'area' => 100,
+            'type' => 'rent',
         ]);
 
         Passport::actingAs($this->buyerUser);
@@ -170,13 +171,13 @@ class RoomControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'id'          => $room->id,
-                    'name'        => 'Test Room',
-                    'address'     => '123 Test Street',
+                    'id' => $room->id,
+                    'name' => 'Test Room',
+                    'address' => '123 Test Street',
                     'description' => 'A beautiful room',
-                    'bedrooms'    => 2,
-                    'bathrooms'   => 1,
-                    'type'        => 'rent',
+                    'bedrooms' => 2,
+                    'bathrooms' => 1,
+                    'type' => 'rent',
                 ],
             ]);
     }
@@ -206,14 +207,14 @@ class RoomControllerTest extends TestCase
         Passport::actingAs($this->adminUser);
 
         $roomData = [
-            'name'         => 'New Room',
-            'address'      => '456 New Street',
-            'description'  => 'A brand new room',
-            'bedrooms'     => 3,
-            'bathrooms'    => 2,
-            'price'        => 10000,
-            'area'         => 150,
-            'type'         => 'sale',
+            'name' => 'New Room',
+            'address' => '456 New Street',
+            'description' => 'A brand new room',
+            'bedrooms' => 3,
+            'bathrooms' => 2,
+            'price' => 10000,
+            'area' => 150,
+            'type' => 'sale',
             'is_available' => true,
         ];
 
@@ -238,17 +239,17 @@ class RoomControllerTest extends TestCase
             ->assertJson([
                 'message' => 'Room created successfully',
                 'data' => [
-                    'name'        => 'New Room',
-                    'address'     => '456 New Street',
+                    'name' => 'New Room',
+                    'address' => '456 New Street',
                     'description' => 'A brand new room',
-                    'bedrooms'    => 3,
-                    'bathrooms'   => 2,
-                    'type'        => 'sale',
+                    'bedrooms' => 3,
+                    'bathrooms' => 2,
+                    'type' => 'sale',
                 ],
             ]);
 
         $this->assertDatabaseHas('rooms', [
-            'name'    => 'New Room',
+            'name' => 'New Room',
             'address' => '456 New Street',
         ]);
     }
@@ -258,13 +259,13 @@ class RoomControllerTest extends TestCase
         Passport::actingAs($this->buyerUser);
 
         $roomData = [
-            'name'      => 'New Room',
-            'address'   => '456 New Street',
-            'bedrooms'  => 3,
+            'name' => 'New Room',
+            'address' => '456 New Street',
+            'bedrooms' => 3,
             'bathrooms' => 2,
-            'price'     => 10000,
-            'area'      => 150,
-            'type'      => 'sale',
+            'price' => 10000,
+            'area' => 150,
+            'type' => 'sale',
         ];
 
         $response = $this->postJson('/api/room', $roomData);
@@ -275,13 +276,13 @@ class RoomControllerTest extends TestCase
     public function test_unauthenticated_user_cannot_create_room(): void
     {
         $roomData = [
-            'name'      => 'New Room',
-            'address'   => '456 New Street',
-            'bedrooms'  => 3,
+            'name' => 'New Room',
+            'address' => '456 New Street',
+            'bedrooms' => 3,
             'bathrooms' => 2,
-            'price'     => 10000,
-            'area'      => 150,
-            'type'      => 'sale',
+            'price' => 10000,
+            'area' => 150,
+            'type' => 'sale',
         ];
 
         $response = $this->postJson('/api/room', $roomData);
@@ -314,13 +315,13 @@ class RoomControllerTest extends TestCase
         Passport::actingAs($this->adminUser);
 
         $roomData = [
-            'name'      => 'Existing Room',
-            'address'   => '456 New Street',
-            'bedrooms'  => 3,
+            'name' => 'Existing Room',
+            'address' => '456 New Street',
+            'bedrooms' => 3,
             'bathrooms' => 2,
-            'price'     => 10000,
-            'area'      => 150,
-            'type'      => 'sale',
+            'price' => 10000,
+            'area' => 150,
+            'type' => 'sale',
         ];
 
         $response = $this->postJson('/api/room', $roomData);
@@ -334,21 +335,21 @@ class RoomControllerTest extends TestCase
     public function test_admin_can_update_room(): void
     {
         $room = Room::factory()->create([
-            'name'    => 'Old Name',
+            'name' => 'Old Name',
             'address' => 'Old Address',
         ]);
 
         Passport::actingAs($this->adminUser);
 
         $updateData = [
-            'name'        => 'Updated Name',
-            'address'     => 'Updated Address',
+            'name' => 'Updated Name',
+            'address' => 'Updated Address',
             'description' => 'Updated description',
-            'bedrooms'    => 4,
-            'bathrooms'   => 3,
-            'price'       => 20000,
-            'area'        => 200,
-            'type'        => 'rent',
+            'bedrooms' => 4,
+            'bathrooms' => 3,
+            'price' => 20000,
+            'area' => 200,
+            'type' => 'rent',
         ];
 
         $response = $this->putJson("/api/room/{$room->id}", $updateData);
@@ -356,19 +357,19 @@ class RoomControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'id'          => $room->id,
-                    'name'        => 'Updated Name',
-                    'address'     => 'Updated Address',
+                    'id' => $room->id,
+                    'name' => 'Updated Name',
+                    'address' => 'Updated Address',
                     'description' => 'Updated description',
-                    'bedrooms'    => 4,
-                    'bathrooms'   => 3,
-                    'type'        => 'rent',
+                    'bedrooms' => 4,
+                    'bathrooms' => 3,
+                    'type' => 'rent',
                 ],
             ]);
 
         $this->assertDatabaseHas('rooms', [
-            'id'      => $room->id,
-            'name'    => 'Updated Name',
+            'id' => $room->id,
+            'name' => 'Updated Name',
             'address' => 'Updated Address',
         ]);
     }
@@ -380,13 +381,13 @@ class RoomControllerTest extends TestCase
         Passport::actingAs($this->adminUser);
 
         $updateData = [
-            'name'      => 'My Room',
-            'address'   => 'New Address',
-            'bedrooms'  => 4,
+            'name' => 'My Room',
+            'address' => 'New Address',
+            'bedrooms' => 4,
             'bathrooms' => 3,
-            'price'     => 20000,
-            'area'      => 200,
-            'type'      => 'rent',
+            'price' => 20000,
+            'area' => 200,
+            'type' => 'rent',
         ];
 
         $response = $this->putJson("/api/room/{$room->id}", $updateData);
@@ -394,7 +395,7 @@ class RoomControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'name'    => 'My Room',
+                    'name' => 'My Room',
                     'address' => 'New Address',
                 ],
             ]);
@@ -408,13 +409,13 @@ class RoomControllerTest extends TestCase
         Passport::actingAs($this->adminUser);
 
         $updateData = [
-            'name'      => 'Existing Room',
-            'address'   => 'Some Address',
-            'bedrooms'  => 4,
+            'name' => 'Existing Room',
+            'address' => 'Some Address',
+            'bedrooms' => 4,
             'bathrooms' => 3,
-            'price'     => 20000,
-            'area'      => 200,
-            'type'      => 'rent',
+            'price' => 20000,
+            'area' => 200,
+            'type' => 'rent',
         ];
 
         $response = $this->putJson("/api/room/{$room->id}", $updateData);
@@ -430,13 +431,13 @@ class RoomControllerTest extends TestCase
         Passport::actingAs($this->buyerUser);
 
         $updateData = [
-            'name'      => 'Updated Name',
-            'address'   => 'Updated Address',
-            'bedrooms'  => 4,
+            'name' => 'Updated Name',
+            'address' => 'Updated Address',
+            'bedrooms' => 4,
             'bathrooms' => 3,
-            'price'     => 20000,
-            'area'      => 200,
-            'type'      => 'rent',
+            'price' => 20000,
+            'area' => 200,
+            'type' => 'rent',
         ];
 
         $response = $this->putJson("/api/room/{$room->id}", $updateData);
@@ -449,13 +450,13 @@ class RoomControllerTest extends TestCase
         $room = Room::factory()->create();
 
         $updateData = [
-            'name'      => 'Updated Name',
-            'address'   => 'Updated Address',
-            'bedrooms'  => 4,
+            'name' => 'Updated Name',
+            'address' => 'Updated Address',
+            'bedrooms' => 4,
             'bathrooms' => 3,
-            'price'     => 20000,
-            'area'      => 200,
-            'type'      => 'rent',
+            'price' => 20000,
+            'area' => 200,
+            'type' => 'rent',
         ];
 
         $response = $this->putJson("/api/room/{$room->id}", $updateData);
@@ -468,13 +469,13 @@ class RoomControllerTest extends TestCase
         Passport::actingAs($this->adminUser);
 
         $updateData = [
-            'name'      => 'Updated Name',
-            'address'   => 'Updated Address',
-            'bedrooms'  => 4,
+            'name' => 'Updated Name',
+            'address' => 'Updated Address',
+            'bedrooms' => 4,
             'bathrooms' => 3,
-            'price'     => 20000,
-            'area'      => 200,
-            'type'      => 'rent',
+            'price' => 20000,
+            'area' => 200,
+            'type' => 'rent',
         ];
 
         $response = $this->putJson('/api/room/99999', $updateData);
@@ -489,13 +490,13 @@ class RoomControllerTest extends TestCase
         Passport::actingAs($this->adminUser);
 
         $updateData = [
-            'name'         => $room->name,
-            'address'      => $room->address,
-            'bedrooms'     => $room->bedrooms,
-            'bathrooms'    => $room->bathrooms,
-            'price'        => $room->price,
-            'area'         => $room->area,
-            'type'         => $room->type,
+            'name' => $room->name,
+            'address' => $room->address,
+            'bedrooms' => $room->bedrooms,
+            'bathrooms' => $room->bathrooms,
+            'price' => $room->price,
+            'area' => $room->area,
+            'type' => $room->type,
             'is_available' => false,
         ];
 
@@ -509,7 +510,7 @@ class RoomControllerTest extends TestCase
             ]);
 
         $this->assertDatabaseHas('rooms', [
-            'id'           => $room->id,
+            'id' => $room->id,
             'is_available' => false,
         ]);
     }
@@ -543,7 +544,7 @@ class RoomControllerTest extends TestCase
         $response->assertStatus(403);
 
         $this->assertDatabaseHas('rooms', [
-            'id'         => $room->id,
+            'id' => $room->id,
             'deleted_at' => null,
         ]);
     }

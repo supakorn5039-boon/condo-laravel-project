@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\DTOs\RoomsDto;
@@ -29,8 +30,8 @@ class RoomService
         if (isset($filters['search'])) {
             $search = strtolower($filters['search']);
             $query->where(function ($q) use ($search) {
-                $q->whereRaw('LOWER(name) LIKE ?', ['%' . $search . '%'])
-                    ->orWhereRaw('LOWER(description) LIKE ?', ['%' . $search . '%']);
+                $q->whereRaw('LOWER(name) LIKE ?', ['%'.$search.'%'])
+                    ->orWhereRaw('LOWER(description) LIKE ?', ['%'.$search.'%']);
             });
         }
 
@@ -74,16 +75,16 @@ class RoomService
     public function createRoom(RoomsDto $dto, ?array $images = null, ?int $ownerId = null): Room
     {
         $room = Room::create([
-            'name'         => $dto->name,
-            'address'      => $dto->address,
-            'description'  => $dto->description ?? '',
-            'bedrooms'     => $dto->bedrooms,
-            'bathrooms'    => $dto->bathrooms,
-            'price'        => $dto->price,
-            'area'         => $dto->area,
-            'type'         => $dto->type,
+            'name' => $dto->name,
+            'address' => $dto->address,
+            'description' => $dto->description ?? '',
+            'bedrooms' => $dto->bedrooms,
+            'bathrooms' => $dto->bathrooms,
+            'price' => $dto->price,
+            'area' => $dto->area,
+            'type' => $dto->type,
             'is_available' => $dto->is_available ?? true,
-            'owner_id'     => $ownerId,
+            'owner_id' => $ownerId,
         ]);
 
         if ($images) {
@@ -101,14 +102,14 @@ class RoomService
         $room = Room::findOrFail($id);
 
         $room->update([
-            'name'         => $dto->name,
-            'address'      => $dto->address,
-            'description'  => $dto->description ?? '',
-            'bedrooms'     => $dto->bedrooms,
-            'bathrooms'    => $dto->bathrooms,
-            'price'        => $dto->price,
-            'area'         => $dto->area,
-            'type'         => $dto->type,
+            'name' => $dto->name,
+            'address' => $dto->address,
+            'description' => $dto->description ?? '',
+            'bedrooms' => $dto->bedrooms,
+            'bathrooms' => $dto->bathrooms,
+            'price' => $dto->price,
+            'area' => $dto->area,
+            'type' => $dto->type,
             'is_available' => $dto->is_available,
         ]);
 
@@ -136,7 +137,7 @@ class RoomService
 
     public function deleteImage(int $roomId, int $mediaId): bool
     {
-        $room  = Room::findOrFail($roomId);
+        $room = Room::findOrFail($roomId);
         $media = $room->media()->findOrFail($mediaId);
 
         return $media->delete();

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -12,6 +13,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * @method static LengthAwarePaginator paginate(int $perPage = 15, array $columns = ['*'], string $pageName = 'page', int|null $page = null)
+ *
  * @property int $id
  * @property int|null $owner_id refers to user_id in users table
  * @property string $address
@@ -28,6 +30,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $user
  * @property-read int|null $user_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Room newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Room newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Room onlyTrashed()
@@ -48,10 +51,14 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Room whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Room withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Room withoutTrashed()
+ *
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
+ *
  * @method static \Database\Factories\RoomFactory factory($count = null, $state = [])
+ *
  * @property-read array $images
+ *
  * @mixin \Eloquent
  */
 class Room extends Model implements HasMedia
@@ -75,13 +82,13 @@ class Room extends Model implements HasMedia
 
     public function getImagesAttribute(): array
     {
-        $baseUrl = config('app.url') . '/storage/app/public';
+        $baseUrl = config('app.url').'/storage/app/public';
 
-        return $this->getMedia('images')->map(fn($media) => [
-            'id'      => $media->id,
-            'url'     => $baseUrl . '/' . $media->id . '/' . $media->file_name,
-            'thumb'   => $baseUrl . '/' . $media->id . '/conversions/' . pathinfo($media->file_name, PATHINFO_FILENAME) . '-thumb.jpg',
-            'preview' => $baseUrl . '/' . $media->id . '/conversions/' . pathinfo($media->file_name, PATHINFO_FILENAME) . '-preview.jpg',
+        return $this->getMedia('images')->map(fn ($media) => [
+            'id' => $media->id,
+            'url' => $baseUrl.'/'.$media->id.'/'.$media->file_name,
+            'thumb' => $baseUrl.'/'.$media->id.'/conversions/'.pathinfo($media->file_name, PATHINFO_FILENAME).'-thumb.jpg',
+            'preview' => $baseUrl.'/'.$media->id.'/conversions/'.pathinfo($media->file_name, PATHINFO_FILENAME).'-preview.jpg',
         ])->toArray();
     }
 

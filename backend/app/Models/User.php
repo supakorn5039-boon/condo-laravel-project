@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -25,6 +26,7 @@ use Laravel\Passport\HasApiTokens;
  * @property-read int|null $notifications_count
  * @property-read Collection<int, \Laravel\Passport\Token> $tokens
  * @property-read int|null $tokens_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -39,10 +41,12 @@ use Laravel\Passport\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ *
  * @property-read Collection<int, \Laravel\Passport\Client> $clients
  * @property-read int|null $clients_count
  * @property-read Collection<int, \Laravel\Passport\Client> $oauthApps
  * @property-read int|null $oauth_apps_count
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable

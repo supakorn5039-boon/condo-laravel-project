@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api\Room;
 
 use App\DTOs\RoomsDto;
@@ -26,7 +27,7 @@ class RoomController extends Controller implements HasMiddleware
 
     public function index(Request $request): JsonResponse
     {
-        $user    = $request->user();
+        $user = $request->user();
         $isAdmin = $user?->hasRole('admin') ?? false;
 
         $rooms = $this->roomService->getRooms(
@@ -38,12 +39,12 @@ class RoomController extends Controller implements HasMiddleware
         return response()->json([
             'data' => $rooms->items(),
             'meta' => [
-                'total'        => $rooms->total(),
-                'per_page'     => $rooms->perPage(),
+                'total' => $rooms->total(),
+                'per_page' => $rooms->perPage(),
                 'current_page' => $rooms->currentPage(),
-                'last_page'    => $rooms->lastPage(),
-                'from'         => $rooms->firstItem(),
-                'to'           => $rooms->lastItem(),
+                'last_page' => $rooms->lastPage(),
+                'from' => $rooms->firstItem(),
+                'to' => $rooms->lastItem(),
             ],
         ]);
     }
@@ -66,7 +67,7 @@ class RoomController extends Controller implements HasMiddleware
 
         return response()->json([
             'message' => 'Room created successfully',
-            'data'    => $room,
+            'data' => $room,
         ], 201);
     }
 
@@ -77,7 +78,7 @@ class RoomController extends Controller implements HasMiddleware
 
         return response()->json([
             'message' => 'Room updated successfully',
-            'data'    => $room,
+            'data' => $room,
         ]);
     }
 
@@ -93,7 +94,7 @@ class RoomController extends Controller implements HasMiddleware
     public function uploadImages(Request $request, int $id): JsonResponse
     {
         $request->validate([
-            'images'   => ['required', 'array'],
+            'images' => ['required', 'array'],
             'images.*' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
         ]);
 
@@ -101,11 +102,11 @@ class RoomController extends Controller implements HasMiddleware
 
         return response()->json([
             'message' => 'Images uploaded successfully',
-            'data'    => [
-                'room'   => $room,
-                'images' => $room->getMedia('images')->map(fn($media) => [
-                    'id'      => $media->id,
-                    'url'     => $media->getUrl(),
+            'data' => [
+                'room' => $room,
+                'images' => $room->getMedia('images')->map(fn ($media) => [
+                    'id' => $media->id,
+                    'url' => $media->getUrl(),
                     'preview' => $media->getUrl('preview'),
                 ]),
             ],

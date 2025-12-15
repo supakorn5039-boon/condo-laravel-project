@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
@@ -14,46 +15,46 @@ class AuthController extends Controller
     {
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
-            'last_name'  => ['required', 'string', 'max:255'],
-            'email'      => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password'   => ['required', 'string', 'min:8'],
-            'phone'      => ['required', 'string', 'max:20'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+            'phone' => ['required', 'string', 'max:20'],
         ], [
             'first_name.required' => 'The first name field is required.',
-            'last_name.required'  => 'The last name field is required.',
-            'email.required'      => 'The email field is required.',
-            'password.required'   => 'The password field is required.',
-            'email.unique'        => 'The email has already been taken.',
-            'password.min'        => 'The password must be at least 8 characters.',
-            'phone.required'      => 'The phone number field is required.',
+            'last_name.required' => 'The last name field is required.',
+            'email.required' => 'The email field is required.',
+            'password.required' => 'The password field is required.',
+            'email.unique' => 'The email has already been taken.',
+            'password.min' => 'The password must be at least 8 characters.',
+            'phone.required' => 'The phone number field is required.',
         ]);
 
         $users = User::create([
             'first_name' => $request->first_name,
-            'last_name'  => $request->last_name,
-            'email'      => $request->email,
-            'phone'      => $request->phone,
-            'password'   => Hash::make($request->password),
-            'role'       => 'user',
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+            'role' => 'user',
         ]);
 
         return response()->json([
             'message' => 'User registered successfully',
-            'data'    => $users,
-            'token'   => $users->createToken('auth_token')->accessToken,
+            'data' => $users,
+            'token' => $users->createToken('auth_token')->accessToken,
         ], 201);
     }
 
     public function login(Request $request): JsonResponse
     {
         $request->validate([
-            'email'    => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
         ], [
-            'email.required'    => 'The email field is required.',
+            'email.required' => 'The email field is required.',
             'password.required' => 'The password field is required.',
-            'email.email'       => 'The email must be a valid email address.',
-            'password.min'      => 'The password must be at least 8 characters.',
+            'email.email' => 'The email must be a valid email address.',
+            'password.min' => 'The password must be at least 8 characters.',
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -68,8 +69,8 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login Successful',
-            'token'   => $token,
-            'data'    => $user,
+            'token' => $token,
+            'data' => $user,
         ], 200);
     }
 

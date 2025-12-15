@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,11 +24,11 @@ class UserFactory extends Factory
     {
         return [
             'first_name' => fake()->firstName(),
-            'last_name'  => fake()->lastName(),
-            'email'      => fake()->unique()->safeEmail(),
-            'password'   => static::$password ??= Hash::make('password'),
-            'role'       => 'user',
-            'phone'      => fake()->numerify('##########'),
+            'last_name' => fake()->lastName(),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => static::$password ??= Hash::make('password'),
+            'role' => 'user',
+            'phone' => fake()->numerify('##########'),
         ];
     }
 }
